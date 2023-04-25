@@ -1,63 +1,179 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(TravelApp());
+}
 
-class MyApp extends StatelessWidget {
+class TravelApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Travel App',
-      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomePage(),
-      routes: {
-        '/page1': (BuildContext context) => Page1(),
-        '/page2': (BuildContext context) => Page2(),
-        '/page3': (BuildContext context) => Page3(),
-      },
-      onGenerateRoute: (RouteSettings settings) {
-        switch (settings.name) {
-          case '/page4':
-            return CupertinoPageRoute(
-              builder: (BuildContext context) => Page4(),
-            );
-          default:
-            return null;
-        }
-      },
+      home: FirstPage(),
     );
   }
 }
 
-class HomePage extends StatelessWidget {
+class FirstPage extends StatefulWidget {
+  @override
+  _FirstPageState createState() => _FirstPageState();
+}
+
+class _FirstPageState extends State<FirstPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Travel App'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.settings),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SettingsPage()),
+              );
+            },
+          ),
+        ],
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
+          children: [
             ElevatedButton(
-              child: Text('Page 1'),
-              onPressed: () => Navigator.pushNamed(context, '/page1'),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SecondPage()),
+                );
+              },
+              child: Text('Reserve'),
             ),
             ElevatedButton(
-              child: Text('Page 2'),
-              onPressed: () => Navigator.pushNamed(context, '/page2'),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MyReservationsPage()),
+                );
+              },
+              child: Text('My Reservations'),
             ),
-            ElevatedButton(
-              child: Text('Page 3'),
-              onPressed: () => Navigator.pushNamed(context, '/page3'),
+            // Add the horizontally slidable widget here
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class SecondPage extends StatefulWidget {
+  @override
+  _SecondPageState createState() => _SecondPageState();
+}
+
+class _SecondPageState extends State<SecondPage> {
+  String? _selectedType;
+  bool _dateFilled = false;
+  int _peopleCount = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    bool _enableGridButtons = _selectedType != null && _dateFilled && _peopleCount > 0;
+
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: Text('Booking'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      _selectedType = 'Hotel';
+                    });
+                  },
+                  child: Text('Hotel'),
+                  style: ElevatedButton.styleFrom(
+                    primary: _selectedType == 'Hotel' ? Colors.blue : Colors.grey,
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      _selectedType = 'Activities';
+                    });
+                  },
+                  child: Text('Activities'),
+                  style: ElevatedButton.styleFrom(
+                    primary: _selectedType == 'Activities' ? Colors.blue : Colors.grey,
+                  ),
+                ),
+              ],
             ),
-            ElevatedButton(
-              child: Text('Page 4'),
-              onPressed: () => Navigator.pushNamed(context, '/page4'),
+            TextField(
+              onChanged: (value) {
+                setState(() {
+                  _dateFilled = value.isNotEmpty;
+                });
+              },
+              decoration: InputDecoration(hintText: 'Date'),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Number of people:'),
+                IconButton(
+                  icon: Icon(Icons.remove),
+                  onPressed: () {
+                    setState(() {
+                      if (_peopleCount > 0) _peopleCount--;
+                    });
+                  },
+                ),
+                Text('$_peopleCount'),
+                IconButton(
+                  icon: Icon(Icons.add),
+                  onPressed: () {
+                    setState(() {
+                      _peopleCount++;
+                    });
+                  },
+                ),
+              ],
+            ),
+            Expanded(
+              child: GridView.count(
+                crossAxisCount: 2,
+                children: List.generate(6, (index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ElevatedButton(
+                      onPressed: _enableGridButtons
+                          ? () {
+                              // Add navigation to the third page here
+                            }
+                          : null,
+                      child: Text('Button $index'),
+                      style: ElevatedButton.styleFrom(
+                        primary: _enableGridButtons ? Colors.blue : Colors.grey,
+                      ),
+                    ),
+                  );
+                }),
+              ),
             ),
           ],
         ),
@@ -66,57 +182,29 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class Page1 extends StatelessWidget {
+class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Page 1'),
+        title: Text('Settings'),
       ),
       body: Center(
-        child: Text('This is Page 1'),
+        child: Text('Settings Page'),
       ),
     );
   }
 }
 
-class Page2 extends StatelessWidget {
+class MyReservationsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Page 2'),
+        title: Text('My Reservations'),
       ),
       body: Center(
-        child: Text('This is Page 2'),
-      ),
-    );
-  }
-}
-
-class Page3 extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Page 3'),
-      ),
-      body: Center(
-        child: Text('This is Page 3'),
-      ),
-    );
-  }
-}
-
-class Page4 extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        middle: Text('Page 4'),
-      ),
-      child: Center(
-        child: Text('This is Page 4'),
+        child: Text('My Reservations Page'),
       ),
     );
   }
