@@ -17,12 +17,7 @@ class TravelApp extends StatelessWidget {
   }
 }
 
-class FirstPage extends StatefulWidget {
-  @override
-  _FirstPageState createState() => _FirstPageState();
-}
-
-class _FirstPageState extends State<FirstPage> {
+class FirstPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,9 +35,10 @@ class _FirstPageState extends State<FirstPage> {
           ),
         ],
       ),
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             ElevatedButton(
               onPressed: () {
@@ -62,7 +58,47 @@ class _FirstPageState extends State<FirstPage> {
               },
               child: Text('My Reservations'),
             ),
-            // Add the horizontally slidable widget here
+            SizedBox(height: 16),
+            Text(
+              'Recommendations',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 16),
+            Container(
+              height: 395,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: 3,
+                itemBuilder: (context, index) => Padding(
+                  padding: EdgeInsets.only(right: 8.0),
+                  child: Column(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(8.0),
+                        child: Image.asset(
+                          'assets/building${index + 1}.jpg',
+                          width: 300,
+                          height: 300,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      SizedBox(height: 8),
+                      Text('Image Description'),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => FourthPage(title: 'Reservation')),
+                          );
+                        },
+                        child: Text('Reserve'),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -308,6 +344,26 @@ class FourthPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Container(
+              height: 200,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: 4,
+                itemBuilder: (context, index) => Padding(
+                  padding: EdgeInsets.only(right: 8.0),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8.0),
+                    child: Image.asset(
+                      'assets/building${index + 1}.jpg',
+                      width: 400,
+                      height: 400,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 8),
             Text(
               'Description:',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),

@@ -56,6 +56,10 @@ flutter:
     - assets/cat.jpg
     - assets/cat1.png
     - assets/meme.jpg
+    - assets/building1.jpg
+    - assets/building2.jpg
+    - assets/building3.jpg
+    - assets/building4.jpg
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
