@@ -252,27 +252,99 @@ class ThirdPage extends StatelessWidget {
           final item = items[index];
           return Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: Image.asset(
-                    item.imagePath,
-                    width: double.infinity,
-                    height: 400,
-                    fit: BoxFit.cover,
+            child: InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => FourthPage(title: item.textFields.first),
                   ),
-                ),
-                SizedBox(height: 10),
-                for (String textField in item.textFields) ...[
-                  Text(textField),
+                );
+              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8.0),
+                    child: Image.asset(
+                      item.imagePath,
+                      width: double.infinity,
+                      height: 400,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                   SizedBox(height: 10),
+                  for (String textField in item.textFields) ...[
+                    Text(textField),
+                    SizedBox(height: 10),
+                  ],
                 ],
-              ],
+              ),
             ),
           );
         },
+      ),
+    );
+  }
+}
+
+class FourthPage extends StatelessWidget {
+  final String title;
+
+  FourthPage({required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: Text(title),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Description:',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 8),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Text(
+                  'This is a sample description. Replace this with your desired text.',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Text Field 1', style: TextStyle(fontSize: 16)),
+                  Text('Text Field 2', style: TextStyle(fontSize: 16)),
+                ],
+              ),
+              ElevatedButton(
+                onPressed: () {},
+                child: Text('Book Now'),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
