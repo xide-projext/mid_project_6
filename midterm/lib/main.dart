@@ -79,9 +79,18 @@ class _SecondPageState extends State<SecondPage> {
   String? _selectedType;
   bool _dateFilled = false;
   int _peopleCount = 0;
+  List<String> buttonNames = [
+    'Button 1',
+    'Button 2',
+    'Button 3',
+    'Button 4',
+    'Button 5',
+    'Button 6',
+  ];
 
   @override
   Widget build(BuildContext context) {
+    // ... rest of the code
     bool _enableGridButtons = _selectedType != null && _dateFilled && _peopleCount > 0;
 
     return Scaffold(
@@ -154,29 +163,78 @@ class _SecondPageState extends State<SecondPage> {
                 ),
               ],
             ),
-            Expanded(
-              child: GridView.count(
-                crossAxisCount: 2,
-                children: List.generate(6, (index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                      onPressed: _enableGridButtons
-                          ? () {
-                              // Add navigation to the third page here
-                            }
-                          : null,
-                      child: Text('Button $index'),
-                      style: ElevatedButton.styleFrom(
-                        primary: _enableGridButtons ? Colors.blue : Colors.grey,
-                      ),
-                    ),
-                  );
+    Expanded(
+      child: GridView.count(
+        crossAxisCount: 2,
+        children: List.generate(buttonNames.length, (index) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ElevatedButton(
+              onPressed: _enableGridButtons
+                  ? () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ThirdPage(buttonName: buttonNames[index])),
+                      );
+                    }
+                  : null,
+              child: Text(buttonNames[index]),
+              style: ElevatedButton.styleFrom(
+                primary: _enableGridButtons ? Colors.blue : Colors.grey,
+              ),
+            ),
+          );
                 }),
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class ThirdPage extends StatelessWidget {
+  final String buttonName;
+
+  ThirdPage({required this.buttonName});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: Text(buttonName),
+      ),
+      body: ListView.builder(
+        itemCount: 10,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8.0),
+                  child: Image.asset(
+                    'assets/cat.jpg', // Replace with your local image asset
+                    width: double.infinity,
+                    height: 200,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                SizedBox(height: 10),
+                Text('Text Field 1'),
+                Text('Text Field 2'),
+                Text('Text Field 3'),
+                Text('Text Field 4'),
+              ],
+            ),
+          );
+        },
       ),
     );
   }
