@@ -194,10 +194,47 @@ class _SecondPageState extends State<SecondPage> {
   }
 }
 
+class ListItem {
+  final String imagePath;
+  final List<String> textFields;
+
+  ListItem({required this.imagePath, required this.textFields});
+}
+
 class ThirdPage extends StatelessWidget {
   final String buttonName;
 
   ThirdPage({required this.buttonName});
+
+  final List<ListItem> items = [
+    ListItem(
+      imagePath: 'assets/cat.jpg',
+      textFields: [
+        'Text Field 1.1',
+        'Text Field 1.2',
+        'Text Field 1.3',
+        'Text Field 1.4',
+      ],
+    ),
+    ListItem(
+      imagePath: 'assets/cat1.png',
+      textFields: [
+        'Text Field 2.1',
+        'Text Field 2.2',
+        'Text Field 2.3',
+        'Text Field 2.4',
+      ],
+    ),
+    ListItem(
+      imagePath: 'assets/meme.jpg',
+      textFields: [
+        'Text Field 3.1',
+        'Text Field 3.2',
+        'Text Field 3.3',
+        'Text Field 3.4',
+      ],
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -210,8 +247,9 @@ class ThirdPage extends StatelessWidget {
         title: Text(buttonName),
       ),
       body: ListView.builder(
-        itemCount: 10,
+        itemCount: items.length,
         itemBuilder: (context, index) {
+          final item = items[index];
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
@@ -220,17 +258,17 @@ class ThirdPage extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),
                   child: Image.asset(
-                    'assets/cat.jpg', // Replace with your local image asset
+                    item.imagePath,
                     width: double.infinity,
-                    height: 200,
+                    height: 400,
                     fit: BoxFit.cover,
                   ),
                 ),
                 SizedBox(height: 10),
-                Text('Text Field 1'),
-                Text('Text Field 2'),
-                Text('Text Field 3'),
-                Text('Text Field 4'),
+                for (String textField in item.textFields) ...[
+                  Text(textField),
+                  SizedBox(height: 10),
+                ],
               ],
             ),
           );
