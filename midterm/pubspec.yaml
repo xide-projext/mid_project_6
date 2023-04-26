@@ -53,9 +53,12 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
 flutter:
   assets:
-    - assets/cat.jpg
-    - assets/cat1.png
-    - assets/meme.jpg
+    - assets/63building1.jpg
+    - assets/63building2.jpg
+    - assets/63building3.jpg
+    - assets/63building4.jpg
+    - assets/seoulsky.jpg
+    - assets/tower.jpg
     - assets/building1.jpg
     - assets/building2.jpg
     - assets/building3.jpg

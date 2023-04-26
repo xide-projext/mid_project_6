@@ -8,7 +8,8 @@ class TravelApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Travel App',
+      debugShowCheckedModeBanner: false,
+      title: 'Travel Korea',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -22,7 +23,7 @@ class FirstPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Travel App'),
+        title: Text('Travel Korea'),
         actions: [
           IconButton(
             icon: Icon(Icons.settings),
@@ -84,7 +85,7 @@ class FirstPage extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: 8),
-                      Text('Image Description'),
+                      Text('Buildings'),
                       ElevatedButton(
                         onPressed: () {
                           Navigator.push(
@@ -116,12 +117,12 @@ class _SecondPageState extends State<SecondPage> {
   bool _dateFilled = false;
   int _peopleCount = 0;
   List<String> buttonNames = [
-    'Button 1',
-    'Button 2',
-    'Button 3',
-    'Button 4',
-    'Button 5',
-    'Button 6',
+    'Seoul',
+    'Busan',
+    'Daegu',
+    'Gyeonggi',
+    'Incheon',
+    'Jeju',
   ];
 
   @override
@@ -174,7 +175,7 @@ class _SecondPageState extends State<SecondPage> {
                   _dateFilled = value.isNotEmpty;
                 });
               },
-              decoration: InputDecoration(hintText: 'Date'),
+              decoration: InputDecoration(hintText: 'Month(MM)'),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -244,30 +245,30 @@ class ThirdPage extends StatelessWidget {
 
   final List<ListItem> items = [
     ListItem(
-      imagePath: 'assets/cat.jpg',
+      imagePath: 'assets/63building1.jpg',
       textFields: [
-        'Text Field 1.1',
-        'Text Field 1.2',
-        'Text Field 1.3',
-        'Text Field 1.4',
+        '63 Building',
+        'Yeongdeungpo-gu',
+        'May 4th',
+        '15,000krw',
       ],
     ),
     ListItem(
-      imagePath: 'assets/cat1.png',
+      imagePath: 'assets/seoulsky.jpg',
       textFields: [
-        'Text Field 2.1',
-        'Text Field 2.2',
-        'Text Field 2.3',
-        'Text Field 2.4',
+        'Seoul Sky Bridge',
+        'Songpa-gu',
+        'May 1st',
+        '96,000krw',
       ],
     ),
     ListItem(
-      imagePath: 'assets/meme.jpg',
+      imagePath: 'assets/tower.jpg',
       textFields: [
-        'Text Field 3.1',
-        'Text Field 3.2',
-        'Text Field 3.3',
-        'Text Field 3.4',
+        'Namsan Tower',
+        'Yongsan-gu',
+        'April 29th',
+        '16,000krw',
       ],
     ),
   ];
@@ -354,7 +355,7 @@ class FourthPage extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8.0),
                     child: Image.asset(
-                      'assets/building${index + 1}.jpg',
+                      'assets/63building${index + 1}.jpg',
                       width: 400,
                       height: 400,
                       fit: BoxFit.cover,
@@ -365,14 +366,14 @@ class FourthPage extends StatelessWidget {
             ),
             SizedBox(height: 8),
             Text(
-              'Description:',
+              '63 Building',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 8),
             Expanded(
               child: SingleChildScrollView(
                 child: Text(
-                  'This is a sample description. Replace this with your desired text.',
+                  '63 building is one of the tallest towers in Korea. It iconically glows gold especially when the sun shines on it. 63 Building offers a vast array of activities such as aquariums, sky views, and fancy restaurants and buffets. The relatively low price and the ability to see some of the greatest views in Korea is one of the main reasons to visit 63 Building. When you are done enjoying the view, even zooming in with the binoculars mounted outside, you can enjoy even grander views by visiting the aquarium where you can enjoy the aquatic life. To end the day, you can treat yourself to a great meal in one of the many restaurants that exist in 63 Building.',
                   style: TextStyle(fontSize: 16),
                 ),
               ),
@@ -390,8 +391,8 @@ class FourthPage extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Text Field 1', style: TextStyle(fontSize: 16)),
-                  Text('Text Field 2', style: TextStyle(fontSize: 16)),
+                  Text('May 4th', style: TextStyle(fontSize: 16)),
+                  Text('15,000krw', style: TextStyle(fontSize: 16)),
                 ],
               ),
               ElevatedButton(
@@ -414,7 +415,7 @@ class SettingsPage extends StatelessWidget {
         title: Text('Settings'),
       ),
       body: Center(
-        child: Text('Settings Page'),
+        child: Text('Payment options'),
       ),
     );
   }
@@ -428,7 +429,7 @@ class MyReservationsPage extends StatelessWidget {
         title: Text('My Reservations'),
       ),
       body: Center(
-        child: Text('My Reservations Page'),
+        child: Text('Reservation History'),
       ),
     );
   }
